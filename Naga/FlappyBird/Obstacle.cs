@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlappyBird
 {
-    class Obstacle//Andrey
+    class Obstacle
     {
         public int height;
         public string[] upperPart = { " __________ ", "|          |", "|          |", " __________ " };
