@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FlappyBird
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+        }
+        static void ReDrawObstacles(List<Obstacle> upObstacles, List<Obstacle> downObstacles, Boundaries b)
+        {
+            int downStartY = 0, upStartY = 0;
+
+
+            for (int i = 0; i < downObstacles.Count; i++)
+            {
+                if (downObstacles[i].X <= b.leftX)
+                {
+
+                    downObstacles.Remove(downObstacles[i]);
+                    points = Score(downObstacles);
+                }
+                if (downObstacles.Count == 0)
+                {
+                    break;
+                }
+                downStartY = downObstacles[i].Y;
+                for (int j = 0; j < downObstacles[i].height; j++)
+                {
+                    if (downObstacles[i].X + 12 <= b.rightX)
+                    {
+                        if (j < 4)
+                        {
+                            PrintOnScreen(downObstacles[i].X, downObstacles[i].Y, downObstacles[i].upperPart[j], ConsoleColor.Red);
+
+                        }
+                        else
+                            PrintOnScreen(downObstacles[i].X, downObstacles[i].Y, " |        |", ConsoleColor.Red);
+                    }
+                    downObstacles[i].Y++;
+
+                }
+                downObstacles[i].Y = downStartY;
+                downObstacles[i].X -= 3;
+            }
+            int k = 0;
+            for (int i = 0; i < upObstacles.Count; i++)
+            {
+                if (upObstacles[i].X <= b.leftX)
+                {
+                    upObstacles.Remove(upObstacles[i]);
+                }
+                if (upObstacles.Count == 0)
+                {
+                    break;
+                }
+                upStartY = upObstacles[i].Y;
+                k = 0;
+                for (int j = 0; j < upObstacles[i].height; j++)
+                {
+                    if (upObstacles[i].X + 12 <= b.rightX)
+                    {
+                        if (j < upObstacles[i].height - 4)
+                        {
+                            PrintOnScreen(upObstacles[i].X, upObstacles[i].Y, " |        |", ConsoleColor.Red);
+
+
+                        }
+                        else
+                        {
+                            PrintOnScreen(upObstacles[i].X, upObstacles[i].Y, upObstacles[i].upperPart[k], ConsoleColor.Red);
+                            k++;
+                        }
+                    }
+                    upObstacles[i].Y++;
+
+                }
+                upObstacles[i].Y = upStartY;
+                upObstacles[i].X -= 3;
+            }
+
+        }//Andrey
+    }
+}
