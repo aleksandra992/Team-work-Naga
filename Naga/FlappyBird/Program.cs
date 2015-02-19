@@ -8,6 +8,8 @@ namespace FlappyBird
 {
     class Program
     {
+        static public int points = 0;
+
         static void Main(string[] args)
         {
         }
