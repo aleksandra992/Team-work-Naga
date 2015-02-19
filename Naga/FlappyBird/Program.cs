@@ -83,6 +83,14 @@ namespace FlappyBird
                 upObstacles[i].X -= 3;
             }
 
-        }//Andrey
+        }
+        static void PrintOnScreen(int x, int y, string str, ConsoleColor color)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.ForegroundColor = color;
+            Console.Write(str);
+        }
+
+
     }
 }
