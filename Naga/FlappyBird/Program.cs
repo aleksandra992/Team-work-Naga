@@ -12,6 +12,7 @@ namespace FlappyBird
 
         static void Main(string[] args)
         {
+            Menu();
         }
         static void ReDrawObstacles(List<Obstacle> upObstacles, List<Obstacle> downObstacles, Boundaries b)
         {
@@ -114,6 +115,30 @@ namespace FlappyBird
 
 
         }
+        static public ConsoleKeyInfo Menu()
+        {
+            Console.Clear();
+            Console.CursorVisible = false;
+            Console.WriteLine(@"
+                                      #####    ##### ############ ######    #####  ####    ####
+                                      ######  ###### ####         #######   #####  ####    ####
+                                      ############## ###########  ##### ##  #####  ####    ####
+                                      #####    ##### ###########  #####  ## #####  ####    #### 
+                                      #####    ##### ####         #####   #######  ####    ####  
+                                      #####    ##### ############ #####    ######    ######## ");
+
+
+            Console.WriteLine();
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 7, Console.WindowHeight / 2 - 7);
+            Console.WriteLine("1. START GAME");
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 7, Console.WindowHeight / 2 - 6);
+            Console.WriteLine("2. SCORE");
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 7, Console.WindowHeight / 2 - 5);
+            Console.WriteLine("3. EXIT");
+            var result = Console.ReadKey(true);
+            return result;
+
+        }//MENU - Emo - IN PROGRESS
 
         static void WriteScoreInFile()
         {
