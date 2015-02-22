@@ -15,7 +15,50 @@ namespace FlappyBird
         static void Main(string[] args)
         {
             Menu();
+
+
+            List<Obstacle> downObstacles = new List<Obstacle>();
+            List<Obstacle> upObstacles = new List<Obstacle>();
+            int j = 4;
+            int pom = 0;
+            int pom1 = 0;
+            for (int i = 1; i < 51; i++)
+            {
+                if (i < 11)
+                {
+                    AddObstacles(downObstacles, upObstacles, i, j);
+                    j++;
+                }
+                else
+                    if (i >= 11 && i < 26)
+                    {
+
+                        AddObstacles(downObstacles, upObstacles, i, j);
+                        pom = j + 1;
+
+
+                    }
+                    else
+                        if (i >= 26 && i < 41)
+                        {
+                            AddObstacles(downObstacles, upObstacles, i, pom);
+
+
+                            pom1 = pom + 1;
+
+                        }
+                        else
+                        {
+                            AddObstacles(downObstacles, upObstacles, i, pom1);
+                        }
+
+
+
+
+            }
         }
+        static void AddObstacles(List<Obstacle> downObstacles, List<Obstacle> upObstacles, int i, int j)
+        { }
         static void ReDrawObstacles(List<Obstacle> upObstacles, List<Obstacle> downObstacles, Boundaries b)
         {
             int downStartY = 0, upStartY = 0;
