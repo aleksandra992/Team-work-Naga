@@ -18,12 +18,19 @@ namespace FlappyBird
             Menu();
 
 
+
+            int numberOfObstacles = 51;
             List<Obstacle> downObstacles = new List<Obstacle>();
             List<Obstacle> upObstacles = new List<Obstacle>();
+            AddUpDownObstacle(downObstacles, upObstacles, numberOfObstacles);
+        }
+
+        private static void AddUpDownObstacle(List<Obstacle> downObstacles, List<Obstacle> upObstacles, int numberOfObstacles)
+        {
             int j = 4;
             int pom = 0;
             int pom1 = 0;
-            for (int i = 1; i < 51; i++)
+            for (int i = 1; i < numberOfObstacles; i++)
             {
                 if (i < 11)
                 {
