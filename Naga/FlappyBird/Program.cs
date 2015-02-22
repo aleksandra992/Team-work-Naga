@@ -14,6 +14,7 @@ namespace FlappyBird
 
         static void Main(string[] args)
         {
+            SplashScreen.SplashScreen();
             Menu();
 
 
@@ -214,7 +215,6 @@ namespace FlappyBird
 
 
         }
-
-
+        
     }
 }
