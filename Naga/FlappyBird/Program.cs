@@ -16,10 +16,28 @@ namespace FlappyBird
         static void Main(string[] args)
         {
            SplashScreen.SplashScreenStart();
-           Menu();
+           ConsoleKeyInfo MenuKey;
+           bool startGame = false;
 
-            Console.BufferWidth = Console.WindowWidth = 150;
-            Console.BufferHeight = Console.WindowHeight = 41;
+           Console.BufferWidth = Console.WindowWidth = 150;
+           Console.BufferHeight = Console.WindowHeight = 41;
+
+           do
+           {
+               MenuKey = Menu();
+               switch (MenuKey.KeyChar.ToString())
+               {
+                   case "1": startGame = true; break;
+                   case "2": ScoreMenu(); break;
+                   case "3": Environment.Exit(0); break;
+
+               }
+               if (startGame == true)
+               {
+                   break;
+               }
+           } while (true); // menu loop
+
             Bird b = new Bird();
             b.position.Y = Console.WindowHeight / 2;
             b.position.X = 15;
@@ -292,6 +310,49 @@ namespace FlappyBird
             return result;
 
         }//MENU - Emo - IN PROGRESS
+        static public void ScoreMenu()
+        {
+            HighScore();
+            Console.Clear();
+            //TODO: print SCORE title
+            Console.WriteLine(@"               
+                                  ###########    ###########    ###########    #########    ###########
+                                  ###########    ###########    ###########    ####  ###    ####
+                                  ####           ###            ##       ##    ####  ###    ####
+                                  ####           ###            ##       ##    #########    ######
+                                  ###########    ###            ##       ##    ########     #########
+                                         ####    ###            ##       ##    ###  ###     ######
+                                         ####    ###            ##       ##    ###   ###    ####
+                                  ###########    ###########    ###########    ###    ###   ####
+                                  ###########    ###########    ###########    ###     ###  ###########");
+            StreamReader scoreReader = new StreamReader(@"..\Score.txt");
+            string score = scoreReader.ReadLine();
+            int[] scoreTab = new int[5];
+            int counter = 0;
+
+            while (score != null)
+            {
+                scoreTab[counter] = int.Parse(score);
+                score = scoreReader.ReadLine();
+                counter++;
+            }
+            scoreReader.Close();
+
+            for (int i = 0; i < scoreTab.Length; i++)
+            {
+                Console.SetCursorPosition(Console.WindowWidth / 2 - 7, Console.WindowHeight / 2 - 7 + i);
+                Console.WriteLine("{0}.{1}", i + 1, scoreTab[i]);
+            }
+
+            ConsoleKeyInfo scoreKey;
+            Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 2);
+            Console.WriteLine("Pess ESC to go BACK.");
+
+            do
+            {
+                scoreKey = Console.ReadKey(true);
+            } while (scoreKey.Key != ConsoleKey.Escape);
+        }//Emo
 
         static void WriteScoreInFile()
         {
