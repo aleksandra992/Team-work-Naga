@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FlappyBird
@@ -14,15 +15,99 @@ namespace FlappyBird
 
         static void Main(string[] args)
         {
-            SplashScreen.SplashScreen();
-            Menu();
+           SplashScreen.SplashScreenStart();
+           Menu();
 
+            Console.BufferWidth = Console.WindowWidth = 150;
+            Console.BufferHeight = Console.WindowHeight = 41;
+            Bird b = new Bird();
+            b.position.Y = Console.WindowHeight / 2;
+            b.position.X = 15;
+            string hurtSound = @"hurt.wav";
+            string jumpSound = @"jump.wav";
+            //down obstacles
 
 
             int numberOfObstacles = 51;
             List<Obstacle> downObstacles = new List<Obstacle>();
             List<Obstacle> upObstacles = new List<Obstacle>();
             AddUpDownObstacle(downObstacles, upObstacles, numberOfObstacles);
+            Boundaries bnd = new Boundaries();
+            bnd.height = Console.WindowHeight;
+            bnd.leftX = 2;
+            bnd.leftY = 0;
+            bnd.rightX = Console.BufferWidth - 40;
+            bnd.rightY = 0;
+
+            while (true)
+            {
+                if (upObstacles.Count == 0 && downObstacles.Count == 0)
+                {
+                    PrintOnScreen(Console.BufferWidth - 35, 12, "Congratulations, you've got " + points, ConsoleColor.Yellow);
+                    PrintOnScreen(Console.BufferWidth - 35, 14, "Restart the game Y/N", ConsoleColor.Yellow);
+                    break;
+
+                }
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo firstPressedKey = Console.ReadKey(true);
+                    if (firstPressedKey.Key == ConsoleKey.UpArrow)
+                    {
+                        b.position.Y -= 2;
+                        //play jump sound
+                    }
+
+
+                }
+
+                b.position.Y++;
+
+               // ReDraw everything
+                if (b.position.Y <= 0 || b.position.Y + 4 >= Console.WindowHeight)
+                {
+                   
+                   // play hurt sound 
+                    WriteScoreInFile();
+                 //print game over
+                    break;
+
+                }
+
+                bool hit = false;
+                for (int i = 0; i < downObstacles.Count; i++)
+                {
+                    if (b.position.Y + b.bird.Length - 1 >= downObstacles[i].Y && b.position.X + b.bird.Length - 1 >= downObstacles[i].X)
+                    {
+                      //play hurt sound
+                        WriteScoreInFile();
+                     //print game over
+                        hit = true;
+                        break;
+                    }
+                }
+                if (hit)
+                    break;
+                for (int i = 0; i < upObstacles.Count; i++)
+                {
+                    if (b.position.Y + 1 <= upObstacles[i].Y + upObstacles[i].height && b.position.X + b.bird.Length - 1 >= upObstacles[i].X)
+                    {
+                       
+                      //play hurt sound
+                        WriteScoreInFile();
+                      //print game over
+
+                        hit = true;
+                        break;
+                    }
+                }
+                if (hit)
+                    break;
+
+                Thread.Sleep(100);
+                Console.Clear();
+
+
+            }
         }
 
         private static void AddUpDownObstacle(List<Obstacle> downObstacles, List<Obstacle> upObstacles, int numberOfObstacles)
@@ -78,7 +163,7 @@ namespace FlappyBird
                 {
 
                     downObstacles.Remove(downObstacles[i]);
-                    points = Score(downObstacles);
+                   // points = Score(downObstacles);
                 }
                 if (downObstacles.Count == 0)
                 {

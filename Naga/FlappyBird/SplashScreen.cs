@@ -8,7 +8,7 @@ namespace FlappyBird
 {
     class SplashScreen
     {
-       public static ConsoleKeyInfo SplashScreen()
+       public static ConsoleKeyInfo SplashScreenStart()
         {
             string logo = @"
 ######## ####                                                                          ####
