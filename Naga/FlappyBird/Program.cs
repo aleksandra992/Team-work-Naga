@@ -150,6 +150,21 @@ namespace FlappyBird
 
             }
         }
+        static void ReDrawBoundaries(Boundaries b)
+        {
+            int startLeftY = b.leftY;
+            int startRightY = b.rightY;
+            for (int i = 0; i < b.height; i++)
+            {
+
+                PrintOnScreen(b.leftX, b.leftY, "|", ConsoleColor.Black);
+                PrintOnScreen(b.rightX, b.rightY, "|", ConsoleColor.White);
+                b.leftY++;
+                b.rightY++;
+            }
+            b.rightY = startRightY;
+            b.leftY = startLeftY;
+        }
         static void AddObstacles(List<Obstacle> downObstacles, List<Obstacle> upObstacles, int i, int j)
         { }
         static void ReDrawObstacles(List<Obstacle> upObstacles, List<Obstacle> downObstacles, Boundaries b)
