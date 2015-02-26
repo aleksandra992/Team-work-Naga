@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlappyBird
 {
-    class SplashScreen
+    class SplashScreen // Boris
     {
        public static ConsoleKeyInfo SplashScreenStart()
         {
@@ -38,6 +38,7 @@ namespace FlappyBird
             Console.ResetColor();
 
             var key = Console.ReadKey(true);
+
             return key;
 
         }

@@ -20,8 +20,8 @@ namespace FlappyBird
            bool startGame = false;
 
            Console.BufferWidth = Console.WindowWidth = 150;
-           Console.BufferHeight = Console.WindowHeight = 41;
-
+           Console.BufferHeight = Console.WindowHeight = 45;
+            
            do
            {
                MenuKey = Menu();
@@ -184,7 +184,10 @@ namespace FlappyBird
             b.leftY = startLeftY;
         }
         static void AddObstacles(List<Obstacle> downObstacles, List<Obstacle> upObstacles, int i, int j)
-        { }
+        {
+            downObstacles.Add(new Obstacle(j + 1, (i * 40) + i, Console.WindowHeight - (j + 1)));
+            upObstacles.Add(new Obstacle(j + 1, (i * 40) + i, 0));
+        }
         static void ReDrawObstacles(List<Obstacle> upObstacles, List<Obstacle> downObstacles, Boundaries b)
         {
             int downStartY = 0, upStartY = 0;
@@ -383,6 +386,7 @@ namespace FlappyBird
 
 
         }
-        
+
+                
     }
 }
