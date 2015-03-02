@@ -16,13 +16,21 @@ namespace FlappyBird
 
         static void Main()
         {
+           
+          
+           bool startGame = false;
+           try
+           {
+               Console.BufferWidth = Console.WindowWidth = 150;
+               Console.BufferHeight = Console.WindowHeight = 41;
+           }
+           catch (ArgumentOutOfRangeException ex)
+           {
+               Console.WriteLine("Please set your console font to 12 and Lucida Console font");
+               return;
+           }
            SplashScreen.SplashScreenStart();
            ConsoleKeyInfo MenuKey;
-           bool startGame = false;
-
-           Console.BufferWidth = Console.WindowWidth = 150;
-           Console.BufferHeight = Console.WindowHeight = 41;
-            
            do
            {
                MenuKey = Menu();
