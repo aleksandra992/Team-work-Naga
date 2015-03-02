@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,14 @@ namespace FlappyBird
     {
         static public int points = 0;
 
-        static void Main(string[] args)
+        static void Main()
         {
            SplashScreen.SplashScreenStart();
            ConsoleKeyInfo MenuKey;
            bool startGame = false;
 
            Console.BufferWidth = Console.WindowWidth = 150;
-           Console.BufferHeight = Console.WindowHeight = 45;
+           Console.BufferHeight = Console.WindowHeight = 41;
             
            do
            {
@@ -38,14 +39,39 @@ namespace FlappyBird
                }
            } while (true); // menu loop
 
+
+
+
+
+           Game();
+                
+            while (true)
+            {
+
+
+                if (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey(true).KeyChar;
+                    if (key == 'y')
+                    {
+                        Game();
+                        break;
+                    }
+                    else
+                        if (key == 'n')
+                            break;
+                    Thread.Sleep(1000);
+                }
+            }
+        }
+
+        private static void Game()
+        {
             Bird b = new Bird();
             b.position.Y = Console.WindowHeight / 2;
             b.position.X = 15;
             string hurtSound = @"hurt.wav";
             string jumpSound = @"jump.wav";
-            //down obstacles
-
-
             int numberOfObstacles = 51;
             List<Obstacle> downObstacles = new List<Obstacle>();
             List<Obstacle> upObstacles = new List<Obstacle>();
@@ -72,21 +98,20 @@ namespace FlappyBird
                     if (firstPressedKey.Key == ConsoleKey.UpArrow)
                     {
                         b.position.Y -= 2;
-                        //play jump sound
+                        PlaySound(jumpSound);
                     }
 
 
                 }
 
                 b.position.Y++;
-
-               // ReDraw everything
+                ReDraw(b, upObstacles, downObstacles, bnd);
                 if (b.position.Y <= 0 || b.position.Y + 4 >= Console.WindowHeight)
                 {
-                   
-                   // play hurt sound 
+                    //  points = Score(upObstacles);
+                    PlaySound(hurtSound);
                     WriteScoreInFile();
-                 //print game over
+                    PrintGameOver();
                     break;
 
                 }
@@ -96,10 +121,11 @@ namespace FlappyBird
                 {
                     if (b.position.Y + b.bird.Length - 1 >= downObstacles[i].Y && b.position.X + b.bird.Length - 1 >= downObstacles[i].X)
                     {
-                      //play hurt sound
-                        WriteScoreInFile();
-                     //print game over
+                        //  points = Score(upObstacles);
                         hit = true;
+                        PlaySound(hurtSound);
+                        WriteScoreInFile();
+                        PrintGameOver();
                         break;
                     }
                 }
@@ -109,10 +135,10 @@ namespace FlappyBird
                 {
                     if (b.position.Y + 1 <= upObstacles[i].Y + upObstacles[i].height && b.position.X + b.bird.Length - 1 >= upObstacles[i].X)
                     {
-                       
-                      //play hurt sound
+                        // points = Score(upObstacles);
+                        PlaySound(hurtSound);
                         WriteScoreInFile();
-                      //print game over
+                        PrintGameOver();
 
                         hit = true;
                         break;
@@ -168,6 +194,13 @@ namespace FlappyBird
 
             }
         }
+        static public void PlaySound(string s)
+        {
+            var startScreen = new System.Media.SoundPlayer(s);
+            startScreen.Play();
+
+            
+        }
         static void ReDrawBoundaries(Boundaries b)
         {
             int startLeftY = b.leftY;
@@ -199,7 +232,7 @@ namespace FlappyBird
                 {
 
                     downObstacles.Remove(downObstacles[i]);
-                   // points = Score(downObstacles);
+                    points = Score(downObstacles);
                 }
                 if (downObstacles.Count == 0)
                 {
@@ -267,7 +300,11 @@ namespace FlappyBird
             Console.ForegroundColor = color;
             Console.Write(str);
         }
-
+        static int Score(List<Obstacle> obstacles)
+        {
+            int result = (50 - obstacles.Count) * 2;
+            return result;
+        }
         static string HighScore()
         {
             try
@@ -386,7 +423,36 @@ namespace FlappyBird
 
 
         }
+        static void PrintGameOver()
+        {
+            PrintOnScreen(Console.BufferWidth - 35, 15, "Game over, you've got " + points + " points", ConsoleColor.Yellow);
+            PrintOnScreen(Console.BufferWidth - 35, 16, "Restart the game Y/N", ConsoleColor.Yellow);
+        }
+        static void ReDraw(Bird b, List<Obstacle> upObstacles, List<Obstacle> downObstacles, Boundaries bnd)
+        {
+            ReDrawBird(b);
+            ReDrawObstacles(upObstacles, downObstacles, bnd);
+            ReDrawBoundaries(bnd);
+            ReDrawScore(points);
+        }
+        static void ReDrawBird(Bird b)
+        {
+            int birdStartY = 0;
+            birdStartY = b.position.Y;
+            for (int i = 0; i < b.bird.Length; i++)
+            {
 
-                
+                PrintOnScreen(b.position.X, b.position.Y, b.bird[i], ConsoleColor.Yellow);
+                b.position.Y++;
+            }
+            b.position.Y = birdStartY;
+        }
+        static void ReDrawScore(int score)
+        {
+            Point scorePosition = new Point(Console.BufferWidth - 20, 10);
+            PrintOnScreen(scorePosition.X, scorePosition.Y, "SCORE: " + score.ToString(), ConsoleColor.Yellow);
+            PrintOnScreen(scorePosition.X, scorePosition.Y - 2, "HIGH SCORE: " + HighScore(), ConsoleColor.Yellow);
+
+        }   
     }
 }
