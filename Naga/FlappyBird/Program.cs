@@ -25,6 +25,7 @@ namespace FlappyBird
         {
 
 
+
             bool startGame = false;
             try
             {
@@ -61,26 +62,9 @@ namespace FlappyBird
 
             Game();
 
-            while (true)
-            {
-
-
-                if (Console.KeyAvailable)
-                {
-                    var key = Console.ReadKey(true).KeyChar;
-                    if (key == 'y')
-                    {
-                        Game();
-                        break;
-                    }
-                    else
-                        if (key == 'n')
-                            break;
-                    Thread.Sleep(1000);
-                }
-            }
+           
         }
-
+       
         private static void Game()
         {
             Bird b = new Bird();
@@ -166,6 +150,24 @@ namespace FlappyBird
                 Console.Clear();
 
 
+            }
+            while (true)
+            {
+
+
+                if (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey(true).KeyChar;
+                    if (key == 'y')
+                    {
+                        Game();
+                        break;
+                    }
+                    else
+                        if (key == 'n')
+                            break;
+                    Thread.Sleep(1000);
+                }
             }
         }
 
@@ -311,7 +313,7 @@ namespace FlappyBird
         }
         static int Score(List<Obstacle> obstacles)
         {
-            int result = (50 - obstacles.Count);// *2;
+            int result = (50 - obstacles.Count) *2;
             PlaySound(pointSound);
             return result;
         }
@@ -320,7 +322,7 @@ namespace FlappyBird
             try
             {
 
-                StreamReader scoreRead = new StreamReader(@"..\Score.txt");
+                StreamReader scoreRead = new StreamReader(@"..\..\Score.txt");
                 string highScore = scoreRead.ReadLine();
                 scoreRead.Close();
                 return highScore;
