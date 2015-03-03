@@ -42,7 +42,7 @@ namespace FlappyBird
             ConsoleKeyInfo MenuKey;
             do
             {
-                MenuKey = Menu();
+                MenuKey = MenuScreen.Menu();
                 switch (MenuKey.KeyChar.ToString())
                 {
                     case "1": startGame = true; break;
@@ -94,6 +94,7 @@ namespace FlappyBird
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo firstPressedKey = Console.ReadKey(true);
+                    while (Console.KeyAvailable) Console.ReadKey(true);
                     if (firstPressedKey.Key == ConsoleKey.UpArrow)
                     {
                         b.position.Y -= 2;
@@ -336,33 +337,8 @@ namespace FlappyBird
             }
 
 
-
         }
-        static public ConsoleKeyInfo Menu()
-        {
-            Console.Clear();
-            Console.CursorVisible = false;
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n\n\n\n");
-            Console.Write("{0,95}", "███╗   ███╗███████╗███╗   ██╗██╗   ██╗\n");
-            Console.Write("{0,95}", "████╗ ████║██╔════╝████╗  ██║██║   ██║\n");
-            Console.Write("{0,95}", "██╔████╔██║█████╗  ██╔██╗ ██║██║   ██║\n");
-            Console.Write("{0,95}", "██║╚██╔╝██║██╔══╝  ██║╚██╗██║██║   ██║\n");
-            Console.Write("{0,95}", "██║ ╚═╝ ██║███████╗██║ ╚████║╚██████╔╝\n");
-            Console.Write("{0,95}", "╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝ \n");
-            Console.ResetColor();
-
-            Console.WriteLine();
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 7, Console.WindowHeight / 2 - 7);
-            Console.WriteLine("1. START GAME");
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 7, Console.WindowHeight / 2 - 6);
-            Console.WriteLine("2. SCORE");
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 7, Console.WindowHeight / 2 - 5);
-            Console.WriteLine("3. EXIT");
-            var result = Console.ReadKey(true);
-            return result;
-
-        }//MENU - Emo - IN PROGRESS
+        //MENU - Emo - IN PROGRESS
         static public void ScoreMenu()
         {
             HighScore();

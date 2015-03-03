@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Bird.cs" />
     <Compile Include="Boundaries.cs" />
+    <Compile Include="MenuScreen.cs" />
     <Compile Include="Obstacle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
