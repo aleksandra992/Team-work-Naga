@@ -9,9 +9,9 @@ namespace FlappyBird
     class Obstacle
     {
         public int height;
-        public string[] upperPart = { " __________ ", "|          |", "|          |", " __________ " };
+        public string[] upperPart = { "╔═╩══════╩═╗", "║░░░░░░░░░░║", "║▓▓▓▓▓▓▓▓▓▓║", "╚══════════╝" };
         public int X, Y;
-
+        public string[] downPart = { "╔══════════╗", "║▓▓▓▓▓▓▓▓▓▓║", "║░░░░░░░░░░║", "╚═╦══════╦═╝" }; 
 
         public Obstacle(int height, int X, int Y)
         {

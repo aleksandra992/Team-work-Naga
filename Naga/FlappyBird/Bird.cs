@@ -9,10 +9,15 @@ namespace FlappyBird
 {
     class Bird
     {
-        public string[] bird={" __ ",
-                       "/  \\",
-                       "   *>" ,
-                      "\\__/"};
+        public string[] bird1 ={ "  \\   ",
+                                 "__)\\o<",
+                                 "  ''  " 
+                                };
+
+        public string[] bird2 ={ "__,-o<",
+                                 "  )/  ",
+                                 "  /   "
+                                };
         public Point position=new Point();
 
     }
