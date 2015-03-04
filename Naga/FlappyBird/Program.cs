@@ -34,7 +34,7 @@ namespace FlappyBird
             }
             catch (ArgumentOutOfRangeException ex)
             {
-                Console.WriteLine("Please set your console font to 12 and Lucida Console font");
+                Console.WriteLine("Please set your console font Lucida Console-size 12 and windows/buffer size to 151x41");
                 return;
             }
             PlaySound(menuSound);
@@ -330,7 +330,7 @@ namespace FlappyBird
             }
             catch (FileNotFoundException e)
             {
-                StreamWriter writer = new StreamWriter(@"..\Score.txt");
+                StreamWriter writer = new StreamWriter(@"..\..\Score.txt");
                 writer.WriteLine("0");
                 writer.Close();
                 return "0";
@@ -354,7 +354,7 @@ namespace FlappyBird
                                          ####    ###            ##       ##    ###   ###    ####
                                   ###########    ###########    ###########    ###    ###   ####
                                   ###########    ###########    ###########    ###     ###  ###########");
-            StreamReader scoreReader = new StreamReader(@"..\Score.txt");
+            StreamReader scoreReader = new StreamReader(@"..\..\Score.txt");
             string score = scoreReader.ReadLine();
             int[] scoreTab = new int[5];
             int counter = 0;
